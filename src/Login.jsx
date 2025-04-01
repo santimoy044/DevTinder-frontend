@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [passWord, setpassWord] = useState("");
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,10 +22,11 @@ const Login = () => {
         { withCredentials: true }
       );
 
-      dispatch(addUser(res.data));
+      dispatch(addUser(res.data.user));
       return navigate("/"); // Redirect to the home page after successful login
     } catch (error) {
-      console.log("Login failed:", error);
+      setError(error?.response?.data || "Login failed");
+      console.error("Login error:", error);
     }
   };
 
@@ -46,13 +48,14 @@ const Login = () => {
             <fieldset className="fieldset">
               <legend className="fieldset-legend">passWord</legend>
               <input
-                type="passWord" // Use "passWord" instead of "text"
+                type="passWord"
                 className="input"
                 value={passWord}
                 onChange={(e) => setpassWord(e.target.value)}
               />
             </fieldset>
           </div>
+          <p className="text-red-500">{error}</p>
           <div className="card-actions justify-center">
             <button className="btn" onClick={handleLogin}>
               Login

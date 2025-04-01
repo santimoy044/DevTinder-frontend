@@ -5,6 +5,7 @@ import Login from "./Login";
 import Profile from "./Profile";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
+import Feed from "./Feed";
 
 function App() {
   return (
